@@ -43,7 +43,7 @@
                                     <constraint firstAttribute="height" constant="60" id="cLw-T4-rIA"/>
                                 </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="Bottom">
+                                    <fragment content="BOTTOM">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <font key="NSFont" size="40" name="HelveticaNeue-CondensedBlack"/>
@@ -51,14 +51,14 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="xmk-Eq-s5z">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Qco-5w-1sq"/>
                                 </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="Top">
+                                    <fragment content="TOP">
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="40" name="HelveticaNeue-CondensedBlack"/>
@@ -66,7 +66,7 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

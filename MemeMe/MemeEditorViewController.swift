@@ -43,21 +43,10 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
             self.cancelButton.isEnabled = false
         }
         
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = NSTextAlignment.center
-        
-        let memeTextAttributes = [
-            NSStrokeColorAttributeName : UIColor.black,
-            NSForegroundColorAttributeName : UIColor.white,
-            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName : -5.0,
-            NSParagraphStyleAttributeName: paragraphStyle
-        ] as [String : Any]
-        
         self.topTextField.delegate = self
-        self.topTextField.defaultTextAttributes = memeTextAttributes
+        self.stylizeTextField(textField: self.topTextField)
         self.bottomTextField.delegate = self
-        self.bottomTextField.defaultTextAttributes = memeTextAttributes
+        self.stylizeTextField(textField: self.bottomTextField)
         
     }
     
@@ -85,13 +74,17 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func presentImagePicker(sourceType: UIImagePickerControllerSourceType) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = sourceType
+        self.present(imagePicker, animated: true, completion: nil)
+    }
 
     @IBAction func captureImage(_ sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .camera
-            self.present(imagePicker, animated: true, completion: nil)
+            presentImagePicker(sourceType: .camera)
         }
         else {
             self.cameraBarButton.isEnabled = false
@@ -99,16 +92,16 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     }
     
     @IBAction func pickImage(_ sender: AnyObject) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        self.present(imagePicker, animated: true, completion: nil)
+        presentImagePicker(sourceType: .photoLibrary)
     }
     
     @IBAction func shareMeme(_ sender: AnyObject) {
-        self.meme = Meme(topText: self.topTextField.text, bottomText: self.bottomTextField.text, image: self.imageDisplay.image, memedImage: self.generateMemedImage())
-        let image = self.meme.memedImage
-        let shareItems = [ image! ]
+        let memedImage = self.generateMemedImage()
+        let shareItems = [ memedImage ]
         let shareActivity = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+        shareActivity.completionWithItemsHandler = { activity, success, items, error in
+            self.meme = Meme(topText: self.topTextField.text, bottomText: self.bottomTextField.text, image: self.imageDisplay.image, memedImage: memedImage)
+        }
         self.present(shareActivity, animated: true, completion: nil)
     }
     
@@ -153,6 +146,20 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         
     }
     
+    func stylizeTextField(textField: UITextField) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.center
+
+        let memeTextAttributes = [
+            NSStrokeColorAttributeName : UIColor.black,
+            NSForegroundColorAttributeName : UIColor.white,
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName : -5.0,
+            NSParagraphStyleAttributeName: paragraphStyle
+        ] as [String : Any]
+
+        textField.defaultTextAttributes = memeTextAttributes
+    }
     
     func generateMemedImage() -> UIImage
     {
