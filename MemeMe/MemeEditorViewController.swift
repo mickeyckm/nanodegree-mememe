@@ -35,18 +35,18 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         // Do any additional setup after loading the view, typically from a nib.
         
         if !UIImagePickerController.isSourceTypeAvailable(.camera) {
-            self.cameraBarButton.isEnabled = false
+            cameraBarButton.isEnabled = false
         }
         
         if imageDisplay.image == nil {
-            self.shareButton.isEnabled = false
-            self.cancelButton.isEnabled = false
+            shareButton.isEnabled = false
+            cancelButton.isEnabled = false
         }
         
-        self.topTextField.delegate = self
-        self.stylizeTextField(textField: self.topTextField)
-        self.bottomTextField.delegate = self
-        self.stylizeTextField(textField: self.bottomTextField)
+        topTextField.delegate = self
+        stylizeTextField(textField: topTextField)
+        bottomTextField.delegate = self
+        stylizeTextField(textField: bottomTextField)
         
     }
     
@@ -79,7 +79,7 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = sourceType
-        self.present(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
 
     @IBAction func captureImage(_ sender: AnyObject) {
@@ -87,7 +87,7 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
             presentImagePicker(sourceType: .camera)
         }
         else {
-            self.cameraBarButton.isEnabled = false
+            cameraBarButton.isEnabled = false
         }
     }
     
@@ -96,28 +96,28 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     }
     
     @IBAction func shareMeme(_ sender: AnyObject) {
-        let memedImage = self.generateMemedImage()
+        let memedImage = generateMemedImage()
         let shareItems = [ memedImage ]
         let shareActivity = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
         shareActivity.completionWithItemsHandler = { activity, success, items, error in
             self.meme = Meme(topText: self.topTextField.text, bottomText: self.bottomTextField.text, image: self.imageDisplay.image, memedImage: memedImage)
         }
-        self.present(shareActivity, animated: true, completion: nil)
+        present(shareActivity, animated: true, completion: nil)
     }
     
     @IBAction func cancelImage(_ sender: AnyObject) {
-        self.shareButton.isEnabled = false
-        self.cancelButton.isEnabled = false
-        self.imageDisplay.image = nil
-        self.topTextField.text = "Top"
-        self.bottomTextField.text = "Bottom"
+        shareButton.isEnabled = false
+        cancelButton.isEnabled = false
+        imageDisplay.image = nil
+        topTextField.text = "Top"
+        bottomTextField.text = "Bottom"
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         imageDisplay.image = chosenImage
-        self.shareButton.isEnabled = true
-        self.cancelButton.isEnabled = true
+        shareButton.isEnabled = true
+        cancelButton.isEnabled = true
         dismiss(animated: true, completion: nil)
     }
     
@@ -127,17 +127,17 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     }
     
     func keyboardWillShow(notification: Notification) {
-        self.view.frame.origin.y -= getKeyboardHeight(notification: notification)
+        view.frame.origin.y -= getKeyboardHeight(notification: notification)
     }
     
     func keyboardWillHide(notification: Notification) {
-        self.view.frame.origin.y += getKeyboardHeight(notification: notification)
+        view.frame.origin.y += getKeyboardHeight(notification: notification)
     }
     
     func getKeyboardHeight(notification: Notification) -> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        if self.bottomTextField.isFirstResponder {
+        if bottomTextField.isFirstResponder {
             return keyboardSize.cgRectValue.height
         }
         else {
@@ -164,18 +164,18 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     func generateMemedImage() -> UIImage
     {
         // Hide toolbar and navbar
-        self.navigationController?.navigationBar.isHidden = true
-        self.bottomToolbar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
+        bottomToolbar.isHidden = true
         
         // Render view to an image
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        self.view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
         let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         // Show toolbar and navbar
-        self.navigationController?.navigationBar.isHidden = false
-        self.bottomToolbar.isHidden = false
+        navigationController?.navigationBar.isHidden = false
+        bottomToolbar.isHidden = false
         
         return memedImage
     }
