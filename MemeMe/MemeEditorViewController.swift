@@ -21,15 +21,6 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
-    struct Meme {
-        var topText: String?
-        var bottomText: String?
-        var image: UIImage?
-        var memedImage: UIImage?
-    }
-    
-    var meme: Meme!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -40,7 +31,6 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         
         if imageDisplay.image == nil {
             shareButton.isEnabled = false
-            cancelButton.isEnabled = false
         }
         
         topTextField.delegate = self
@@ -100,24 +90,24 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         let shareItems = [ memedImage ]
         let shareActivity = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
         shareActivity.completionWithItemsHandler = { activity, success, items, error in
-            self.meme = Meme(topText: self.topTextField.text, bottomText: self.bottomTextField.text, image: self.imageDisplay.image, memedImage: memedImage)
+            let meme = Meme(topText: self.topTextField.text, bottomText: self.bottomTextField.text, image: self.imageDisplay.image, memedImage: memedImage)
+            
+            // Add it to the memes array in the Application Delegate
+            let object = UIApplication.shared.delegate
+            let appDelegate = object as! AppDelegate
+            appDelegate.memes.append(meme)
         }
         present(shareActivity, animated: true, completion: nil)
     }
     
     @IBAction func cancelImage(_ sender: AnyObject) {
-        shareButton.isEnabled = false
-        cancelButton.isEnabled = false
-        imageDisplay.image = nil
-        topTextField.text = "Top"
-        bottomTextField.text = "Bottom"
+        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         imageDisplay.image = chosenImage
         shareButton.isEnabled = true
-        cancelButton.isEnabled = true
         dismiss(animated: true, completion: nil)
     }
     
