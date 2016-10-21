@@ -38,7 +38,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="d4w-kr-fmz"/>
                                 </items>
                             </toolbar>
-                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="DFe-8v-vyn">
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DFe-8v-vyn">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="cLw-T4-rIA"/>
                                 </constraints>
@@ -53,7 +53,7 @@
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="xmk-Eq-s5z">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xmk-Eq-s5z">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Qco-5w-1sq"/>
                                 </constraints>
