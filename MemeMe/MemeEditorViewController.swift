@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeEditorViewController.swift
 //  MemeMe
 //
 //  Created by Mickey Cheong on 20/10/16.
@@ -58,11 +58,6 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     func unsubscribeFromKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillHide, object: nil)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func presentImagePicker(sourceType: UIImagePickerControllerSourceType) {
