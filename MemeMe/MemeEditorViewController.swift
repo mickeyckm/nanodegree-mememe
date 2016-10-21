@@ -112,11 +112,11 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     }
     
     func keyboardWillShow(notification: Notification) {
-        view.frame.origin.y -= getKeyboardHeight(notification: notification)
+        view.frame.origin.y = getKeyboardHeight(notification: notification) * (-1)
     }
     
     func keyboardWillHide(notification: Notification) {
-        view.frame.origin.y += getKeyboardHeight(notification: notification)
+        view.frame.origin.y = 0
     }
     
     func getKeyboardHeight(notification: Notification) -> CGFloat {
@@ -128,7 +128,6 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         else {
             return 0
         }
-        
     }
     
     func stylizeTextField(textField: UITextField) {
